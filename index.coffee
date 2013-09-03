@@ -12,7 +12,13 @@ module.exports = (file) ->
     ,
         () ->
             compiled = "";
-            jst = _.template(buffer.toString()).source;
+            try
+                jst = _.template(buffer.toString()).source;
+            catch e
+                message = e.message + ' in '+ file
+                message += '\n'
+                message += e.source
+                throw new Error(message)
             compiled += "module.exports = " + jst + ";\n";
             @queue(compiled)
             @queue(null)
