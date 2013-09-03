@@ -11,7 +11,7 @@ module.exports = (file) ->
             buffer += chunk.toString()
     ,
         () ->
-            compiled = "_ = require('underscore');\n";
+            compiled = "";
             jst = _.template(buffer.toString()).source;
             compiled += "module.exports = " + jst + ";\n";
             @queue(compiled)
