@@ -14,9 +14,17 @@ module.exports = function(file) {
   return through(function(chunk) {
     return buffer += chunk.toString();
   }, function() {
-    var compiled, jst;
+    var compiled, e, jst, message;
     compiled = "";
-    jst = _.template(buffer.toString()).source;
+    try {
+      jst = _.template(buffer.toString()).source;
+    } catch (_error) {
+      e = _error;
+      message = e.message + ' in ' + file;
+      message += '\n';
+      message += e.source;
+      throw new Error(message);
+    }
     compiled += "module.exports = " + jst + ";\n";
     this.queue(compiled);
     return this.queue(null);
