@@ -7,7 +7,7 @@ _ = require("underscore");
 
 module.exports = function(file) {
   var buffer;
-  if (!/\.tpl|\.html/.test(file)) {
+  if (!/\.ejs/.test(file)) {
     return through();
   }
   buffer = "";
@@ -15,7 +15,7 @@ module.exports = function(file) {
     return buffer += chunk.toString();
   }, function() {
     var compiled, jst;
-    compiled = "_ = require('underscore');\n";
+    compiled = "";
     jst = _.template(buffer.toString()).source;
     compiled += "module.exports = " + jst + ";\n";
     this.queue(compiled);
