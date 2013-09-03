@@ -3,7 +3,7 @@ _ = require("underscore")
 
 
 module.exports = (file) ->
-    return through() if (!/\.tpl|\.html/.test(file))
+    return through() if (!/\.ejs/.test(file))
     buffer = ""
 
     return through(
